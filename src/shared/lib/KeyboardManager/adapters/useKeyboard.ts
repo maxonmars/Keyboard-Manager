@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { addCallback } from '../core';
-import { Callback, WrappedCallback, Key } from '../types';
+import { Callback, Key } from '../types';
 
 type Props = {
   key: Key;
@@ -10,9 +10,9 @@ type Props = {
 };
 
 export const useKeyboard = ({ key, callback, disabled = false }: Props) => {
-  const wrappedCallback = useRef<WrappedCallback>(null);
+  // const wrappedCallback = useRef<WrappedCallback>(null);
 
-  wrappedCallback.current = { callback };
+  // wrappedCallback.current = { callback };
 
   const removeCallback = useMemo(() => {
     if (disabled) {
@@ -21,9 +21,9 @@ export const useKeyboard = ({ key, callback, disabled = false }: Props) => {
 
     return addCallback({
       key,
-      wrappedCallback,
+      callback,
     });
-  }, [key, disabled]);
+  }, [key, disabled, callback]);
 
   useEffect(() => {
     if (removeCallback) return removeCallback;

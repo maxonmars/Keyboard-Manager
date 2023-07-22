@@ -7,10 +7,8 @@ const onKeyDown = (event: KeyboardEvent) => {
     return;
   }
 
-  const wrappedCallback = queue[queue.length - 1];
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  wrappedCallback.current?.callback(event);
+  const callback = queue[queue.length - 1];
+  callback(event);
 };
 
 export const addEventListener = (): void => {

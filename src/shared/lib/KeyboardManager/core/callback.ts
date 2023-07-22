@@ -1,16 +1,15 @@
-import { getOrCreateQueue, allQueuesAreEmpty } from './queue';
+import { Callback, Key, Queue } from '../types';
 import { addEventListener, removeEventListener } from './event';
-import { WrappedCallbackRef, Queue, Key } from '../types';
+import { allQueuesAreEmpty, getOrCreateQueue } from './queue';
 
 type RemoveParams = {
   queue: Queue;
-  wrappedCallback: WrappedCallbackRef;
+  callback: Callback;
 };
 
-const removeCallback = ({ queue, wrappedCallback }: RemoveParams) => {
-
+const removeCallback = ({ queue, callback }: RemoveParams) => {
   const index = queue.findIndex(
-    (queueCallback) => queueCallback === wrappedCallback
+    (queueCallback) => queueCallback === callback
   );
 
   if (index > -1) {
@@ -25,19 +24,18 @@ const removeCallback = ({ queue, wrappedCallback }: RemoveParams) => {
 
 type AddParams = {
   key: Key;
-  wrappedCallback: WrappedCallbackRef;
+  callback: Callback;
 };
 
-export const addCallback = ({ key, wrappedCallback }: AddParams) => {
+export const addCallback = ({ key, callback }: AddParams) => {
   const needAddEventListener = allQueuesAreEmpty();
-
+  
   const queue = getOrCreateQueue(key);
-
-  queue.push(wrappedCallback);
-
+  queue.push(callback);
+  
   if (needAddEventListener) {
     addEventListener();
   }
-  console.log('add callback', queue)
-  return () => removeCallback({ queue, wrappedCallback });
+console.log('add callback', queue)
+  return () => removeCallback({ queue, callback });
 };

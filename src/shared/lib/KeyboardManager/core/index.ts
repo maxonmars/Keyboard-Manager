@@ -1,1 +1,1 @@
-export {addCallback} from './callback.ts'
+export { addCallback } from './callback';

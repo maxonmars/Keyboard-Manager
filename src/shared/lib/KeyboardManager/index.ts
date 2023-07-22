@@ -1,1 +1,1 @@
-export {useKeyboard} from './adapters/useKeyboard.ts'
+export { useKeyboard } from './adapters/useKeyboard';
